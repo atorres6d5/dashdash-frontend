@@ -5,13 +5,8 @@ import NextButton from './common-elements/NextButton'
 const ScheduleType = ({updateNewScheduleTypeData}) => {
 
   const grabData = () => {
-    const scheduleType = document.getElementById('scheduleType').checked
-    if(scheduleType){
-      updateNewScheduleTypeData('weekend');
-    }else{
-      updateNewScheduleTypeData('weekday');
-    }
-
+    const scheduleType = document.getElementById('scheduleType').checked ? 'weekend' : 'weekday'
+    updateNewScheduleTypeData(scheduleType)
   }
 
   return (
