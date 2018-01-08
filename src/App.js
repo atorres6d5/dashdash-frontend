@@ -20,6 +20,10 @@ class App extends Component {
     super(props)
     this.state = {
       userToken: localStorage.getItem('dashdashUserToken'),
+      /*
+        I feel mixed about setting this inside the constructor. It might be
+        better to do this in the componentDidMount method.
+      */
       userId: null,
       firstname: null,
       lastname: null,
@@ -48,6 +52,17 @@ class App extends Component {
       else this.setState({ ...user })
     }
   }
+  
+  /*
+    I would put all of your lifecycle methods in the same place because, why not!
+    Also, another way to put this might be:
+    return !['/signUp', '/signIn'].includes(window.location.pathname)
+  */
+  shouldComponentUpdate() {
+    if (window.location.pathname === '/signUp') return false //do not rerender when saving state on signUp page
+    if (window.location.pathname === '/signIn') return false //do not rerender when saving state on signIn page
+    return true
+  }
 
   updateNewScheduleKidsPetsData = (kids, pets) => {
     this.setState({children: kids, pets: pets})
@@ -59,12 +74,6 @@ class App extends Component {
 
   updateNewScheduleArrivalTimeData = (time) => {
     this.setState({newArrivalTime: time})
-  }
-
-  shouldComponentUpdate() {
-    if (window.location.pathname === '/signUp') return false //do not rerender when saving state on signUp page
-    if (window.location.pathname === '/signIn') return false //do not rerender when saving state on signIn page
-    return true
   }
 
   // GET USER DATA (USER & PLANS)
@@ -91,23 +100,7 @@ class App extends Component {
   }
 
 
-  // get user Badges
-
-  // fetchUserBadges = async (userId)=>{
-  //
-  //   const token = localStorage.getItem('dashdashUserToken')
-  //
-  //   let badgesResponce = await fetch(`${process.env.REACT_APP_DASHDASH_API_URL}/badges/user/${userId}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'authorization': `Bearer ${token}`
-  //     }
-  //   })
-  //   let allBadges = await badgesResponce.json()
-  //
-  //   this.setState({badges:allBadges})
-  //
-  // }
+  // Delete dead code!
 
   // SET APP STATE FROM SUB-COMPONENTS
   saveAppState = (data) => {
