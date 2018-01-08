@@ -4,15 +4,18 @@ import DayOfWeekBtn from './common-elements/DayOfWeekBtn'
 import AddNewButton from './common-elements/AddNewButton'
 import CreatePlanItem from './common-elements/CreatePlanItem'
 import CreateItemModal from './common-elements/CreateItemModal'
-// import EditItemModal from './common-elements/EditItemModal'
 import EditArrivalTimeModal from './common-elements/EditArrivalTimeModal'
 import EditPlanNameModal from './common-elements/EditPlanNameModal'
 
-
+/* 
+  There's a lot of code in this component! It might make sense to build a utility file
+  to handle various parts of this component. Note, I'm not saying make more components;
+  instead, consider how you might break out just certain functionality. `setDays` is a
+  good example.
+*/
 class CreateSchedule extends Component{
   constructor(props){
     super(props)
-    // const {children, pets, newScheduleType, newDaysOfTheWeek} = this.props
 
     this.state ={
       templateName: null,
@@ -32,12 +35,17 @@ class CreateSchedule extends Component{
   //set state after async API call
   async componentDidMount() {
     //figure which template to load
-    console.log(this.state.newArrivalTime);
+    // remove console.log statements from committed code!
     let target = this.findTemplate()
     const template = await this.getTemplateData(target)
     let templateItems = await this.getTemplateItems(target)
     const activeDays = this.setDays()
-    this.setState({templateName: template.Template.name.split(' ')[0], templateId: template.Template.id, templateItems: templateItems.TemplateItems, activeDays: activeDays})
+    this.setState({
+      templateName: template.Template.name.split(' ')[0], 
+      templateId: template.Template.id, 
+      templateItems: templateItems.TemplateItems, 
+      activeDays: activeDays
+    })
   }
 
   //set initial active days for plan
@@ -45,13 +53,8 @@ class CreateSchedule extends Component{
     const daysOfWeek = ['Su','M', 'T', 'W', 'Th', 'F', 'S']
     const weekdays = ['M', 'T', 'W', 'Th', 'F']
     const weekends = ['Su', 'S']
-    let result = null
-    if(this.state.scheduleType === 'weekday'){
-      result = [...weekdays]
-    }else{
-      result = [...weekends]
-    }
-    return result
+    
+    return this.state.scheduleType === 'weekday' ? [...weekdays] : [...weekends]
   }
 
   //update active days as the user selects and unselects days on their plan
@@ -73,7 +76,12 @@ class CreateSchedule extends Component{
     if(this.state.children){
       if(this.state.pets){
         if(this.state.scheduleType === 'weekday'){
-          target = 1
+          /*
+            What're these numbers? Whenever you have random symbols or numbers hanging out
+            in your code it is often unclear what is happening. It'd be best to give these
+            numbers some variables names.
+          */
+          target = 1 
         }else{
           target = 5
         }
@@ -323,7 +331,7 @@ class CreateSchedule extends Component{
         </div>
 
         <div className="item-section">
-
+          // I'd separate these out to variables up above the render method's return 
           {itemData.sort((a,b) => {
             return a.order-b.order
           }).map((item,i) => {
