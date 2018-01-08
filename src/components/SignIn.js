@@ -34,6 +34,7 @@ class SignIn extends Component {
       const userToken = signinJSON.Auth
       const user = await fetchUserData(userToken)
       // display success message
+      // ?? Why not display this with React!?
       signinMessagebox.innerHTML = `
         <div>
           Welcome back, ${user.firstname}!
