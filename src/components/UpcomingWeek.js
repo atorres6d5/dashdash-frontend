@@ -5,6 +5,8 @@ import Navigation from './common-elements/Navigation'
 
 const days = ['Su','M', 'T', 'W', 'Th', 'F', 'S']
 
+// A pretty common convention (instead of all shouty case) is to put `TODO:` before something that
+// needs to happen.
 // WILL NEED TO FIGURE OUT HOW TO ORDER THE WEEK ORDER (HAVE NEXT DAY BE AT THE TOP) AND GET FROM DB
 
 const UpcomingWeek = () => {
