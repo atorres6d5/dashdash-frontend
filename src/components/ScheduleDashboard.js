@@ -9,10 +9,11 @@ const ScheduleDashboard = ({plans, firstname}) => {
 
   const openNav = () => {
       const test = document.getElementById("side-nav").style.width = "85vw";
-      console.log(test);
+      console.log(test); // ??
   }
 
   const closeNav = () => {
+      // What about changing a class instead of manually changing the style?
       document.getElementById("side-nav").style.width = "0";
   }
 
